@@ -1,0 +1,6 @@
+  256  kubectl create -f redis-service.yaml 
+  509  kubectl get po
+  515  kubectl get po
+  520  kubectl get po
+  596  kubectl get po
+  603  history | grep kubectl > kubectl.txt

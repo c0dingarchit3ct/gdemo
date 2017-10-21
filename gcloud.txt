@@ -1,0 +1,24 @@
+  244  which gcloud
+  257  gcloud projects list
+  258  gcloud projects list
+  501  gcloud container clsuters list
+  502  gcloud containers clusters list
+  503  gcloud container clusters list
+  504  gcloud container clusters resize eu-gdemo --notd-pool --size 1
+  505  gcloud container clusters resize eu-gdemo --notd-pool --size=1
+  506  gcloud container clusters resize eu-gdemo  --size=1
+  507  gcloud config set compute/zone europe-west1-b
+  508  gcloud container clusters resize eu-gdemo  --size=1
+  510  gcloud get instances
+  511  gcloud instances list
+  512  gcloud projects list
+  513  gcloud compute instances list
+  514  gcloud container clusters resize eu-gdemo  --size=1
+  516  gcloud compute instances list
+  517  gcloud alpha container clusters update eu-gdemo --enable-autoscaling --min-nodes=1 --max-nodes=10 --zone=europe-west1-b --node-pool=default-poo
+  518  gcloud alpha container clusters update eu-gdemo --enable-autoscaling --min-nodes=1 --max-nodes=10 --zone=europe-west1-b
+  519  gcloud compute instances list
+  597  gcloud cluster containers list
+  598  gcloud container clusters list
+  601  gcloud compute instances list
+  602  history | grep gcloud > gcloud.txt

@@ -1,0 +1,12 @@
+{		
+	"name": "ng-infinite-autocomplete",		
+	"description": "AngularJS 1.x infinite-autocomplete wrapper",		
+	"main": "./dist/index.js",		
+    "author": "Islam Attrash",
+	"license": "MIT",		
+	"homepage": "https://github.com/Attrash-Islam/bower-ng-infinite-autocomplete",		
+	"repository": {		
+		"type": "git",		
+		"url": "git://github.com/Attrash-Islam/bower-ng-infinite-autocomplete.git"		
+	}		
+}

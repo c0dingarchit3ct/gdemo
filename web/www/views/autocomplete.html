@@ -1,0 +1,21 @@
+<p>This is the Rolled Back! AutoComplete view.</p>
+<div>
+  <label>
+       Product:
+    </label>
+
+  <md-content class="md-padding">
+  <md-autocomplete  md-no-cache="true"
+                    md-selected-item="selectedItem"
+                    md-search-text="searchText"
+                    md-items="item in query(searchText)",
+                    ng-disabled="ctrl.isDisabled"
+          md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+          md-min-length="0"
+          placeholder="Product Name?">>
+  <md-item-template>
+    <span md-highlight-text="searchText">{{item}}</span>
+  </md-item-template>
+  </md-autocomplete>
+</md-content>
+</div>
