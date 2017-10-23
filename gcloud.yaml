@@ -1,0 +1,87 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+         - containerPort: 6379
+      - name: redis-sidecar
+        image: klf-redis-sidecar
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  ports:
+  - port: 6379
+  selector:
+    app: redis
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: autocomplete
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: autocomplete
+    spec:
+      containers:
+        - name: autocomplete
+          image: gcr.io/google_containers/klf-autocomplete
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: klfregisterykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: autocomplete
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: autocomplete
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: gcr.io/google_containers/klf-web
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: klfregisterykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: web
