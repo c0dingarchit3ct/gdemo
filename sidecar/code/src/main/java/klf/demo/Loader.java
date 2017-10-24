@@ -17,7 +17,6 @@ public class Loader {
     public static void  main (String[] args) {
         JSONArray products = null;
         int size = 0;
-
         try {
             System.out.println(" loading data");
             JSONParser parser = new JSONParser();
@@ -31,22 +30,46 @@ public class Loader {
             size = products.size();
             System.out.println(" Read + " + size + " records in " + estimatedTime + " Milli Seconds");
         }
-
         catch (Exception e)  {
-            System.out.println ("System Exception ");
+            System.out.println ("System Exception a");
             e.printStackTrace();
         }
-        LoadData(products);
+          LoadData(products);
     }
 
     public static long  LoadData(JSONArray data) {
-        System.out.println("Connecting to redis");
-        System.out.println("server is running -> " + jedis.ping());
-        int size = data.size();
+        int num_retries = 0; // trying and waiting for a few times until reids is up
+        int MAX_RETRIES = 3;
+        int RETRY_INTERVAL = 3000;  // wait for 3 seconds
+        boolean connected = false;
+        int size = 0;
 
+        while (num_retries <= MAX_RETRIES && !connected) {
+          num_retries++;
+          try {
+            System.out.println("Connecting to redis");
+            System.out.println("server is running -> " + jedis.ping());
+            connected = true;
+          }
+            catch (Exception e) {
+              System.out.println ("Attempt no. "+ num_retries + "Failed ..");
+              System.out.println ("Waiting for " + RETRY_INTERVAL + " Milliseconds");
+              try {
+              Thread.sleep(RETRY_INTERVAL);
+            } catch (Exception e2) {
+              System.out.println ("sleep interruption!");
+            }
+            }
+        }
+        if (!connected) {
+          System.out.println ("  Failed to connect ");
+          System.out.println ("Exiting!!!!");
+          return 0;
+        }
 
         long startTime = System.currentTimeMillis();
         JSONObject p = null;
+        size = data.size();
         try {
             for(int n = 0; n < size; n++) {
                 p = (JSONObject) data.get(n);
@@ -57,6 +80,7 @@ public class Loader {
             } } catch (Exception e) {
             System.out.println ("Error in object");
             System.out.println(p);
+            return 0;
         }
         long estimatedTime = System.currentTimeMillis() - startTime;
         System.out.println (" Wrote " + size + " records in " + estimatedTime + " Milli Seconds");
