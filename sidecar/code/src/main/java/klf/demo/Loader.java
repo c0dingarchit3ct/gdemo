@@ -12,7 +12,7 @@ import java.io.FileReader;
  */
 public class Loader {
 
-    private static Jedis jedis = new Jedis("redis");
+    private static Jedis jedis = new Jedis("localhost");
 
     public static void  main (String[] args) {
         JSONArray products = null;
@@ -35,11 +35,20 @@ public class Loader {
             e.printStackTrace();
         }
           LoadData(products);
+
+          while (true) {
+            try {
+            System.out.println("The data synchronization service");
+            Thread.sleep(60000); }
+            catch (Exception e) {
+              System.out.println (" Interrupted exception : \n --------- \n"+e);
+            }
+          }
     }
 
     public static long  LoadData(JSONArray data) {
         int num_retries = 0; // trying and waiting for a few times until reids is up
-        int MAX_RETRIES = 3;
+        int MAX_RETRIES = 300;
         int RETRY_INTERVAL = 3000;  // wait for 3 seconds
         boolean connected = false;
         int size = 0;

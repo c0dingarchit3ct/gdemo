@@ -1,19 +1,19 @@
-version: '2'
+version: '3'
 services:
   web:
-    image: web
-    #image: gcr.io/g-demo-1/web:v1
+    image: gcr.io/google_containers/klf-web:v1
     ports:
-      - "80:80"
-    #depends_on:
-      #- autocomplete
+      - "9090:80"
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
   sidecar:
-    image: sidecar
+    image: gcr.io/google_containers/klf-redis-sidecar:v1
+    network_mode: "host"
+    depends_on:
+      - redis
   autocomplete:
-    image: autocomplete
+    image: gcr.io/google_containers/klf-autocomplete:v1
     ports:
       - "8080:8080"

@@ -42,6 +42,8 @@ public class MemCache {
     }
 
     public static List<String> getProducts(String key) {
+        System.out.println("Connecting to redis " +  jedis.toString());
+        System.out.println("server is running -> " + jedis.ping());
         long startTime = System.currentTimeMillis();
 
         key = key + "*";
